@@ -1,0 +1,9 @@
+/node_modules
+/vendor
+/.env
+_ide_helper.php
+.idea
+.vscode
+.phpstorm.meta.php
+
+docker/dbdata
