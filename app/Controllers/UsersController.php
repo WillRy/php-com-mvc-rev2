@@ -2,13 +2,20 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
 use SON\Controller;
 
 class UsersController extends Controller
 {
+
     public function index()
     {
-        // $this->render(['name' => 'Fulano'], 'users/index');
-        $this->render(['name' => 'Fulano']);
+        $user = $this->model->all();
+        $this->render($user);
+    }
+
+    public function create()
+    {
+        return 'Página de cadastro de usuários';
     }
 }
