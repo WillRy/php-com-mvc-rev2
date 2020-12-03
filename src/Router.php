@@ -8,63 +8,14 @@ use ArrayAccess;
 
 class Router implements ArrayAccess
 {
-    /**
-     * @var array
-     */
-    private $routes = [];
 
-    public function __construct(array $routes = [])
-    {
-        $this->routes = $routes;
-    }
-
-
-    /**
-     * Verifica se o valor existe no Array
-     *
-     * @param mixed $offset
-     * @return bool|void
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->routes[$offset]);
-    }
-
-    /**
-     * Busca um valor no Array
-     *
-     * @param mixed $offset
-     * @return mixed|void
-     */
-    public function offsetGet($offset)
-    {
-        return $this->routes[$offset];
-    }
-
-    /**
-     * Insere um valor no Array
-     *
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->routes[$offset] = $value;
-    }
-
-    /**
-     * Remove um valor do Array
-     *
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->routes[$offset]);
-    }
+    use Collection;
 
     public function handler()
     {
-        $path = empty($_SERVER['PATH_INFO']) ? '/' : $_SERVER['PATH_INFO'];
+//        $path = empty($_SERVER['PATH_INFO']) ? '/' : $_SERVER['PATH_INFO'];
+        $path = $this->getPath();
+
         if (strlen($path) > 1) {
             $path = rtrim($path, '/');
         }
@@ -76,5 +27,13 @@ class Router implements ArrayAccess
         http_response_code(404);
         echo 'Página inexistente';
         exit;
+    }
+
+    public function getPath()
+    {
+        $parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+        $path = rtrim($parts[0], '/');
+        $path = empty($path) ? '/' : $path;
+        return $path;
     }
 }
