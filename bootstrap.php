@@ -1,10 +1,12 @@
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
+
+session_start();
+
 $router = require __DIR__ . '/router.php';
+$resolver = require __DIR__ . '/resolver.php';
 
 $object = $router->handler();
 
-$controller = new $object['class'];
-$action = $object['action'];
-echo $controller->$action();
+$resolver->handler($object['class'], $object['action']);
