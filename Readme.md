@@ -25,3 +25,5 @@ A estrutura construida consiste em:
 ```shell script
 docker-compose up -d --build
 ```
+
+* 3. Acessar a URL: http://localhost:8000
